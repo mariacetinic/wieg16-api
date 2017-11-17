@@ -10,7 +10,9 @@ $options = [ PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_EMULATE_PREPARES   => false  ];
 $pdo = new PDO($dsn, $user, $password, $options);
 
-$sql = "SELECT * FROM `customers` JOIN `address` ON `customers`.`id` = `address`.`customer_id` WHERE `customer_id` = 1";
+$customerId = $_GET['customer_id'];
+
+$sql = "SELECT * FROM `customers` JOIN `address` ON `customers`.`id` = `address`.`customer_id` WHERE `customer_id` = $customerId";
 $stm = $pdo->prepare($sql);
 $stm->execute([]);
 $customers = $stm-> fetchAll();
