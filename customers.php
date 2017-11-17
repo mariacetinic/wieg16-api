@@ -32,7 +32,7 @@ $options = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_EMULATE_PREPARES => false];
 
 $customerId = $_GET['customer_id'];
-$address = $_GET['address'];
+$address = isset($_GET['address']) ? $_GET['address'] : null; //if $address är satt så är $address = $_GET['address'] annars är $address null
 
 $pdo = new PDO($dsn, $user, $password, $options);
 
@@ -55,5 +55,8 @@ $pdo = new PDO($dsn, $user, $password, $options);
     }
     else {
         status_header(404);
-        echo json_encode(["message" => "Customer not found"]);
+        $message = "Customer not found";
+        if ($address != null)
+            $message = "Address not found";
+        echo json_encode(["message" => $message]);
     }
