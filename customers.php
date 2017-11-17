@@ -32,6 +32,7 @@ $options = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_EMULATE_PREPARES => false];
 
 $customerId = $_GET['customer_id'];
+$address = $_GET['address'];
 
 $pdo = new PDO($dsn, $user, $password, $options);
 
@@ -40,10 +41,16 @@ $pdo = new PDO($dsn, $user, $password, $options);
     $stm->execute([]);
     $customer = $stm->fetch();
 
+    $sql = "SELECT * FROM `address` WHERE `customer_id` = $customerId";
+    $stm = $pdo->prepare($sql);
+    $stm->execute([]);
+    $theAddress = $stm->fetch();
 
-
-    if ($customer != null) {
-        header('Content-Type: application/json');
+    header('Content-Type: application/json');
+    if ($customer != null && $address != null) {
+        echo json_encode($theAddress);
+    }
+    else if ($customer != null) { //den här är för generell och kan därför inte vara i if-satsen eftersom den alltid kommer vara true och kommer gå vidare.
         echo json_encode($customer);
     }
     else {
