@@ -31,10 +31,13 @@ $options = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     PDO::ATTR_EMULATE_PREPARES => false];
 
+
+$pdo = new PDO($dsn, $user, $password, $options);
+
+/*
 $customerId = $_GET['customer_id'];
 $address = isset($_GET['address']) ? $_GET['address'] : null; //if $address är satt så är $address = $_GET['address'] annars är $address null
 
-$pdo = new PDO($dsn, $user, $password, $options);
 
     $sql = "SELECT * FROM `customer` JOIN `address` ON `customer`.`id` = `address`.`customer_id` WHERE `customer_id` = $customerId";
     $stm = $pdo->prepare($sql);
@@ -60,3 +63,33 @@ $pdo = new PDO($dsn, $user, $password, $options);
             $message = "Address not found";
         echo json_encode(["message" => $message]);
     }
+    */
+
+//uppgift 5.1 - 5.7
+
+$sql = "SELECT * FROM `customer`";
+$stm = $pdo->prepare($sql);
+$stm->execute([]);
+$customers = $stm->fetchAll();
+
+//var_dump($customers);
+
+$companies = [];
+
+foreach ($customers as $customer) {
+    $companies[] = $customer['customer_company'];
+}
+var_dump($companies);
+die();
+//var_dump($companies);
+
+$unique = array_unique($companies);
+
+foreach ($unique as $companies) {
+    $sql = "INSERT INTO `companies` (`company_name`) VALUES (:company_name)";
+    $stm_insert = $pdo->prepare($sql);
+    $stm_insert->execute([
+        ':company_name' => $companies
+    ]);
+
+}
