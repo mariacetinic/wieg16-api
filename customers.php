@@ -67,7 +67,7 @@ $address = isset($_GET['address']) ? $_GET['address'] : null; //if $address är 
 
 //uppgift 5.1 - 5.7
 
-$sql = "SELECT * FROM `customer`";
+/*$sql = "SELECT * FROM `customer`";
 $stm = $pdo->prepare($sql);
 $stm->execute([]);
 $customers = $stm->fetchAll();
@@ -92,4 +92,18 @@ foreach ($unique as $companies) {
         ':company_name' => $companies
     ]);
 
+}*/
+
+
+$sql = "SELECT * FROM `companies`";
+$stm = $pdo->prepare($sql);
+$stm->execute([]);
+$companies = $stm->fetchAll();
+
+//var_dump($companies);
+
+foreach($companies as $company) {
+    //var_dump($id);
+    //var_dump($company);
+    echo "Id: " . $company['id'] . " " . "Företag: " . $company['company_name'] . "<br>";
 }
