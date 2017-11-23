@@ -96,7 +96,7 @@ foreach ($unique as $companies) {
 
 //UPDATE customer SET `company_id` = 6 WHERE `company_name` = "Intensio"
 //$sql = "SELECT * FROM `companies`";
-$sql = "UPDATE `customer` SET `company_id` = 10 WHERE `customer_company` = \"Intensio\"";
+/*$sql = "UPDATE `customer` SET `company_id` = 10 WHERE `customer_company` = \"Intensio\"";
 $stm = $pdo->prepare($sql);
 $stm->execute([]);
 $companies = $stm->fetchAll();
@@ -107,4 +107,16 @@ foreach($customers as $customer) {
     //var_dump($id);
     //var_dump($company);
     echo "Id: " . $customer['company_id'] . " " . "Företag: " . $customer['customer_company'] . "<br>";
-}
+}*/
+
+$sql = "SELECT * FROM `customer` JOIN `address` ON `customer`.`id` = `address`.`customer_id` WHERE `company_id` = 1";
+$companyId = $_GET['company_id'];
+
+$sql = "SELECT * FROM `customer` JOIN `address` ON `customer`.`id` = `address`.`customer_id` WHERE `company_id` = $companyId";
+$stm = $pdo->prepare($sql);
+$stm->execute([]);
+$customers = $stm-> fetchAll();
+
+echo json_encode($customers);
+
+//Skriv i urlen: http://localhost/wieg16-api/customers.php?company_id=10
