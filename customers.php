@@ -95,20 +95,26 @@ foreach ($unique as $companies) {
 }*/
 
 //UPDATE customer SET `company_id` = 6 WHERE `company_name` = "Intensio"
-//$sql = "SELECT * FROM `companies`";
-/*$sql = "UPDATE `customer` SET `company_id` = 10 WHERE `customer_company` = \"Intensio\"";
+$sql = "SELECT * FROM `companies`";
 $stm = $pdo->prepare($sql);
 $stm->execute([]);
 $companies = $stm->fetchAll();
 
 //var_dump($companies);
 
-foreach($customers as $customer) {
+foreach($companies as $company) {
     //var_dump($id);
     //var_dump($company);
-    echo "Id: " . $customer['company_id'] . " " . "Företag: " . $customer['customer_company'] . "<br>";
-}*/
+    $sql = "UPDATE `customer` SET `company_id` = :id  WHERE `customer_company` = :company_name";
+    $stm = $pdo->prepare($sql);
+    $stm->execute([
+        ':id' => $company['id'],
+        ':company_name' => $company['company_name'],
+    ]);
 
+    echo "Id: " . $company['id'] . " " . "Företag: " . $company['company_name'] . "<br>";
+}
+/*
 //$sql = "SELECT * FROM `customer` JOIN `address` ON `customer`.`id` = `address`.`customer_id` WHERE `company_id` = 1";
 $companyId = $_GET['company_id'];
 
