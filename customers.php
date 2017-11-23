@@ -106,4 +106,5 @@ foreach($companies as $company) {
     //var_dump($id);
     //var_dump($company);
     echo "Id: " . $company['id'] . " " . "Företag: " . $company['company_name'] . "<br>";
+
 }
