@@ -109,7 +109,7 @@ foreach($customers as $customer) {
     echo "Id: " . $customer['company_id'] . " " . "Företag: " . $customer['customer_company'] . "<br>";
 }*/
 
-$sql = "SELECT * FROM `customer` JOIN `address` ON `customer`.`id` = `address`.`customer_id` WHERE `company_id` = 1";
+//$sql = "SELECT * FROM `customer` JOIN `address` ON `customer`.`id` = `address`.`customer_id` WHERE `company_id` = 1";
 $companyId = $_GET['company_id'];
 
 $sql = "SELECT * FROM `customer` JOIN `address` ON `customer`.`id` = `address`.`customer_id` WHERE `company_id` = $companyId";
